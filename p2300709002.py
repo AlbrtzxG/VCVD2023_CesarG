@@ -1,48 +1,39 @@
-__doc__ = " main methode"
-#Import the library
-import argparse
-import sys
+#IMPORT THE EXTENSION
+import matplotlib.pyplot as plt
+import numpy as np
+## ////////////////////////////////
+'''
+#Variables by the user
+V0 = int(input("Wich Velocity have the car? ")) / 3.6
+mass = int( input("Wich is the mass? "))
+uFac = float(input("Give me the friction? "))
+'''
 
-#Import the fuctions
-from CODE.BrakesVelocity import Velocity_Time
-from CODE.BrakesDistance import Distance_Time
+#Maths and calculation
+def Distance_Time (V0, mass, uFac):
+    #Define variables
+    Fr= uFac * 9.81 * mass 
+    aceleration= Fr / mass
+    time = V0 / aceleration
+    Dist = 0
+    Distot = []
+    fig2 = plt.figure()
 
-# ArgParse Configuration
-velparser = argparse.ArgumentParser(description='Proces for graphic velocity')
-velparser.add_argument('--Velocity_PDF', type=str, help='file name for graph')
+    Distance = fig2.add_subplot(111)
+   
+    #data
+    t = np.arange(0.0 , time, 0.1)
+    Vel = [V0 - aceleration * timer for timer in t]
+    for vel in Vel:
+        Dist += vel * 0.1 
+        Distot.append(Dist)
+    #Define Plots
+    Distance.set_xlabel("Seconds")
+    Distance.set_ylabel("Distance m")
+    Distance.plot(t, Distot, color="Green", lw=2)
+    
+    fig2.suptitle("Distance Time of braking", fontweight="bold")
+    #print(Distot)
+    #print(t)
+    plt.savefig("DistanceTime.pdf")
 
-distparser = argparse.ArgumentParser(description='Proces for graphic velocity')
-distparser.add_argument('--Dist_PDF', type=str, help='file name for graph')
-
-# Analizar los argumentos de la línea de comandos
-Velargs = velparser.parse_args()
-Distargs = distparser.parse_args()
-#Case for decide the name 
-
-if Velargs.Velocity_PDF != None:
-  print (Velargs.Velocity_PDF)
-else:
-  Velargs.Velocity_PDF = "Velocity.pdf"
-
-if Distargs.Dist_PDF != None:
-  print (Distargs.Dist_PDF)
-else:
-  Distargs.Dist_PDF = "Distance.pdf"
-
-# Un método
-def main_method():
-  main_method.__doc__ = "sample main method"
-
-  #Insert the values for the functions
-  V0 = int(input("Wich Velocity does the car have? ")) / 3.6
-  mass = int(input("What is the mass? "))
-  uFac = float(input("Give me the friction? "))
-
-  Velocity_Time(Velargs.Velocity_PDF,V0, mass, uFac)
-  Distance_Time(Distargs.Dist_PDF,V0, mass, uFac)
-
-# Hacer el trabajo y llamar a un método
-main_method()
-
-# Terminar el programa
-sys.exit()
