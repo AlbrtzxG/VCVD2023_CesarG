@@ -1,3 +1,5 @@
+#EXAMPLEEEEEE TO USEEEEE 
+# Python p2300709002.py --mass 1000 --V0 20 --uFac 0.65
 __doc__ = " main methode"
 #Import the library
 import argparse
