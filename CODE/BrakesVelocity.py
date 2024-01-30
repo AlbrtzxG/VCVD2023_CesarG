@@ -1,13 +1,6 @@
 #IMPORT THE EXTENSION
 import matplotlib.pyplot as plt
 import numpy as np
-## ////////////////////////////////
-''''
-#Variables by the user
-V0 = int(input("Wich Velocity have the car? ")) / 3.6
-mass = int( input("Wich is the mass? "))
-uFac = float(input("Give me the friction? "))
-'''
 
 #Maths and +calculation
 def Velocity_Time (V0, mass, uFac):
@@ -33,10 +26,4 @@ def Velocity_Time (V0, mass, uFac):
     fig.suptitle("Velocity Time of braking", fontweight="bold")
     #print(Vel)
     plt.savefig("VelocityTime.pdf")
- 
 
-
-
-
-
-#print(V0)
