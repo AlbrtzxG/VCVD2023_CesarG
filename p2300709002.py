@@ -1,39 +1,48 @@
-#IMPORT THE EXTENSION
-import matplotlib.pyplot as plt
-import numpy as np
-## ////////////////////////////////
-'''
-#Variables by the user
-V0 = int(input("Wich Velocity have the car? ")) / 3.6
-mass = int( input("Wich is the mass? "))
-uFac = float(input("Give me the friction? "))
-'''
+__doc__ = " main methode"
+#Import the library
+import argparse
+import sys
 
-#Maths and calculation
-def Distance_Time (V0, mass, uFac):
-    #Define variables
-    Fr= uFac * 9.81 * mass 
-    aceleration= Fr / mass
-    time = V0 / aceleration
-    Dist = 0
-    Distot = []
-    fig2 = plt.figure()
+#Import the fuctions
+from CODE.BrakesVelocity import Velocity_Time
+from CODE.BrakesDistance import Distance_Time
 
-    Distance = fig2.add_subplot(111)
-   
-    #data
-    t = np.arange(0.0 , time, 0.1)
-    Vel = [V0 - aceleration * timer for timer in t]
-    for vel in Vel:
-        Dist += vel * 0.1 
-        Distot.append(Dist)
-    #Define Plots
-    Distance.set_xlabel("Seconds")
-    Distance.set_ylabel("Distance m")
-    Distance.plot(t, Distot, color="Green", lw=2)
-    
-    fig2.suptitle("Distance Time of braking", fontweight="bold")
-    #print(Distot)
-    #print(t)
-    plt.savefig("DistanceTime.pdf")
 
+def main_method():
+  #ARG PARSE CONFIGURATION
+  main_method.__doc__ = "sample main method"
+  DataParse = argparse.ArgumentParser(description='Data for classes')
+  DataParse.add_argument('--V0', type=float, help='Velocity KM/H')
+  DataParse.add_argument('--mass', type=float, help='Mass in kg')
+  DataParse.add_argument('--uFac', type=float, help='Coeficient of friction')
+
+  # Analizar los argumentos de la línea de comandos
+  Datargs = DataParse.parse_args()
+
+  #Case for decide the name in case of RUN FROM VISUAL CODE 
+  #IF FOR THE INITIAL VELOCITY
+  if Datargs.V0 != None:
+    print("The velocity is: ",Datargs.V0)
+  else:
+    Datargs.V0 = float(input("Wich Velocity does the car have? ")) / 3.6
+  #IF FOR THE MASS
+  if Datargs.mass != None:
+    print("The mass is: ", Datargs.mass)
+  else:
+    Datargs.mass = float(input("What is the mass?"))
+  #IF FOR THE FRICTION
+  if Datargs.uFac != None:
+    print("The friction Coeficient: ", Datargs.uFac)
+  else:
+    Datargs.uFac = float(input("Give me the friction? ")) / 3.6
+
+  #Insert the values for the functions
+
+  Velocity_Time(Datargs.V0, Datargs.mass, Datargs.uFac)
+  Distance_Time(Datargs.V0, Datargs.mass, Datargs.uFac)
+
+# Hacer el trabajo y llamar a un método.
+main_method()
+
+# Terminar el programa
+sys.exit()
